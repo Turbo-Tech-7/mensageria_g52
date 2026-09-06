@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: mensageria
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 2000
+          max-attempts: 3
+        default-requeue-rejected: false
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: ${SERVER_PORT:8081}
+
+app:
+  rabbitmq:
+    exchange: eventos.exchange
+    queue: eventos.queue
+    routing-key: eventos.routing-key
+    dlq: eventos.dlq
